@@ -13,5 +13,11 @@ Python + appium + selennium을 활용한 App, Web QA 자동화를 위한 공간�
   
  - [goodchoice_automation.py]
   
-  : 여기어때 APP 자동화 테스트
+  : 여기어때 APP 자동화 테스트 스터디
 
+[musinsa]
+ - [musinsa_app]
+  : 무신사 APP 자동화 테스트 스터디
+  
+  - [search_test]
+   : 무신사 모바일 웹 검색화면 테스트 스터디
