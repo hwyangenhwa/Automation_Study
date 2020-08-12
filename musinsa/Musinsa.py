@@ -6,11 +6,9 @@ from SearchTC import Search
 from CategoryTC import Category
 from Utility import UI_Utility
 from time import sleep
-from appium.webdriver.common.touch_action import TouchAction
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException
 import HTMLTestRunner
 import unittest
 
@@ -21,21 +19,37 @@ class MusinsaTests(unittest.TestCase):
         wait = WebDriverWait(driver, 20)
 
         permissionFlow = Permssion(driver)
-        permissionFlow.permission_check()
+        permission_Result = permissionFlow.permission_check()
+
+        if(permission_Result == True):
+            print("MainView loading Suceess")
+        else:
+            print("permission flow is skipped")
+
+        AppiumDriverSetup.tearDown(self)
 
     # Login Flow
     def test_Case2(self):
         driver = AppiumDriverSetup.setUp(self)
-        wait = WebDriverWait(driver, 20)
+        wait = WebDriverWait(driver, 10)
 
         try:
             webview_Main = wait.until(EC.visibility_of_element_located((By.ID, "webview_main")))
         except:
             print("Time Session Out")
 
-        loginCheck = Musinsalogin(driver)
-        loginField = loginCheck.login_page()
-        loginInf = loginCheck.login_inf()
+        try:
+            loginCheck = Musinsalogin(driver)
+            loginField = loginCheck.login_page()
+
+            if (loginField == True):
+                loginInf = loginCheck.login_inf()
+            else:
+                pass
+        except:
+            print("is logined")
+
+        AppiumDriverSetup.tearDown(self)
 
     # Purchase Flow
     def test_Case3(self):
@@ -78,5 +92,4 @@ class MusinsaTests(unittest.TestCase):
         categoryFlow.category_page()
 
 if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(MusinsaTests)
-    unittest.TextTestRunner(verbosity=2).run(suite)
+    unittest.main(testRunner=HTMLTestRunner.TMLTestRunner(output='test'))
